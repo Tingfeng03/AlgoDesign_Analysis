@@ -22,7 +22,7 @@ void combined_sort_performance();
 
 int main()
 {
-    //diff_n();
+    diff_n();
     //diff_s();
     //diff_n_s();
     mergesort_performance();
