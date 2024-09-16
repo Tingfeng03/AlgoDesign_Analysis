@@ -1,2 +1,2 @@
-n,Key Comparisons,time
-10000000, 220100105, 2.918000
+n,Average Key Comparisons,Average Time (s)
+10000000,220101272,4.955200

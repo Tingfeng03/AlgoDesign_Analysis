@@ -19,13 +19,19 @@ void diff_n_s();
 void mergesort_performance();
 void insertionsort_performance();
 void combined_sort_performance();
+int check_sorted(long int* data, long int size) {
+    for (int i=1; i<size; i++) {
+        if (data[i] < data[i-1]) return 0;
+    }
+    return 1;
+}
 
 int main()
 {
-    //diff_n();
+    diff_n();
     //diff_s();
     //diff_n_s();
-    mergesort_performance();
+    //mergesort_performance();
     // insertionsort_performance();
     // combined_sort_performance();
 
@@ -79,6 +85,9 @@ void diff_n()
                 start = clock();
                 hybrid_sort(data, 0, size - 1, S, &keyComp);
                 end = clock();
+                if(check_sorted(data, size) == 0) {
+                    printf("Not sorted\n");
+                } 
                 double time = ((double)(end - start)) / CLOCKS_PER_SEC;
 
                 total_time += time;
@@ -92,7 +101,7 @@ void diff_n()
 
             // Write the results to the output file
             fprintf(file, "%li,%d,%llu,%0.6f\n", size, S, avg_keyComp, avg_time);
-            // printf("%s \n", filename); // verifying purpose
+            printf("%s \n", filename); // verifying purpose
         }
     }
     fclose(file);
@@ -230,7 +239,7 @@ void diff_n_s()
 }
 
 void mergesort_performance() {
-    const char *output_file = "merged_100k.csv"; // Output file to write average number of key comparisons
+    const char *output_file = "mergesort_10m.csv"; // Output file to write average number of key comparisons
     FILE *file = fopen(output_file, "w");
     if (!file)
     {
@@ -245,7 +254,7 @@ void mergesort_performance() {
 
     clock_t start, end;
 
-    int size = 100000; // set the size of n to 100000
+    int size = 10000000; // set the size of n to 100000
 
     char filename[50];
     sprintf(filename, "dataset/dataset_%li_%d.txt", size, 1); // Example filename, will not be used
@@ -268,6 +277,9 @@ void mergesort_performance() {
         start = clock();
         mergesort(data, 0, size - 1, &keyComp);
         end = clock();
+        if(check_sorted(data, size) == 0) {
+                printf("Not sorted\n");
+            } 
         double time = ((double)(end - start)) / CLOCKS_PER_SEC;
 
         total_time += time;
@@ -281,7 +293,7 @@ void mergesort_performance() {
 
     // Write the results to the output file
     fprintf(file, "%li,%llu,%0.6f\n", size, avg_keyComp, avg_time);
-    // printf("%s \n", filename); // verifying purpose
+    printf("%s \n", filename); // verifying purpose
         
     
     fclose(file);
